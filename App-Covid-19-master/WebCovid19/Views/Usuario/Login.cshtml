@@ -1,0 +1,73 @@
+﻿@model Entidades.Views.VMLogin
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AnonimoLayout.cshtml";
+    string mensajeAdvertencia;
+    if (Request["mensaje"]!=null)
+    {
+        mensajeAdvertencia = Request["mensaje"];
+    }
+    else {
+        mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
+    }
+
+    string mensajeError = (string)ViewData["mensajeError"];
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
+}
+
+
+
+<div class="limiter" id="margin-top-header">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-30 p-b-50">
+            <span class="login100-form-title p-b-41">
+                Login
+            </span><br>
+
+            @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+
+            {
+                @Html.AntiForgeryToken()
+
+                if (mensajeError != null)
+                {
+                    <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+                }
+                if (mensajeAdvertencia != null)
+                {
+                    <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
+                }
+                if (mensajeCorrecto != null)
+                {
+                    <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+                }
+
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Email) } })
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Password), Type = "password" } })
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div><br>
+
+                <div class="container-login100-form-btn m-t-32">
+                    <button class="login100-form-btn" type="submit">
+                        Login
+                    </button>
+                </div><br>
+                      <div class="text-center container-login100-form-btn m-t-32">
+                          Aun no estoy registrado  &nbsp;  @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = " text-primary" })
+                          No me llego el mensaje   &nbsp; @Html.ActionLink("Volver a Enviarme", "ReenvioDeCodigo", "Usuario", null, new { @class = " text-primary" })
+                      </div>
+            }
+        </div>
+
+    </div>
+</div>
+

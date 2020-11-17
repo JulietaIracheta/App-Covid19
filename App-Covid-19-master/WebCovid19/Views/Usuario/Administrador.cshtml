@@ -1,0 +1,153 @@
+﻿@model Entidades.Views.VMAdministrador
+@{
+    ViewBag.Title = "Administrador";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
+    string mensajeError = (string)ViewData["mensajeError"];
+}
+
+<div class="text-center mt.5" id="margin-top-header">
+    <h2 class="font-weight-light">Gestion de Denuncias</h2>
+</div>
+
+
+<div class="col-md-12 ">
+
+
+    @if (Model.listaNecesidades.Count == 0)
+    {
+        <div>
+            <h2 class="text-center font-weight-light">No se preocupe, todavia no hay denuncias para gestionar.</h2>
+        </div>
+    }
+    else
+    {
+        if (mensajeCorrecto != null)
+        {
+            <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+        }
+        if (mensajeError != null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+        }
+
+        foreach (var necesidad in Model.listaNecesidades.OrderBy(o => o.FechaFin).Distinct())
+        {
+
+
+            using (Html.BeginForm("DenunciaEvaluada", "Usuario", FormMethod.Post, new { @class = "col-md-12" }))
+            {
+
+                <div class="col-md-12 mt-4 mb-3 float-auto">
+
+                    <div class="card" id="card">
+                        <img class="mx-auto d-block  ml-5 mt- mb-2" id="imagen-necesidad" src="@necesidad.Foto" />
+
+
+
+                        <div class="col-md-12">
+
+                            <div class="card-body mt-2">
+                                <h2 class="text-center col-md-12">@necesidad.Nombre</h2>
+
+                                <div class="input-group mb-3 text-center">
+
+                                    <div class="col-md-6 text-center">
+                                        <b>Usuario</b>
+                                        <div class="col-md-12 text-center">
+                                            <p> @necesidad.Usuarios.UserName</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 text-center">
+                                        <b>Descripcion</b>
+                                        <div class="col-md-12 text-center">
+                                            <p>  @necesidad.Descripcion</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Motivo de denuncia:</b>
+                                        <div class="col-md-12 text-center">
+
+                                            <p>
+                                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseMotivos" role="button" aria-expanded="false" aria-controls="collapseMotivos">
+                                                    Motivos
+                                                </a>
+
+                                            </p>
+                                            <div class="collapse" id="collapseMotivos">
+                                                <div class="card card-body">
+
+                                                    @foreach (var denuncias in Model.listaDenuncias.GroupBy(o=>o.MotivoDenuncia.Descripcion))
+                                                    {
+                                                        
+                                                            <h4 class="text-danger"> @denuncias.Key</h4>
+                                                     
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Fecha de creacion: </b>
+                                        <div class="col-md-12 text-center">
+                                            <p><span class="fa fa-calendar"></span> @necesidad.FechaCreacion</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Comentario acerca de la denuncia: </b>
+                                        <div class="col-md-12 text-center">
+
+                                            <p>
+                                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    Comentarios
+                                                </a>
+
+                                            </p>
+                                            <div class="collapse" id="collapseExample">
+                                                <div class="card card-body">
+                                                    @foreach (var denuncias in Model.listaDenuncias)
+                                                    {
+                                                        if (necesidad.IdNecesidad == denuncias.IdNecesidad & denuncias.Estado == (int)Entidades.Enum.TipoEstadoDenuncia.Pendiente)
+                                                        {
+                                                            <p><i class="fa fa-user-circle" aria-hidden="true"></i> @denuncias.Comentarios</p><br />
+                                                            <input type="hidden" name="IdDenuncia" value="@denuncias.IdDenuncia" />
+                                                        }
+
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Detalles de la necesidad</b><br>
+
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-warning text-light float-auto">Detalles</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
+
+                            <div class="col-md-12 btn-group mb-3">
+                                <button type="submit" name="Desestimar" class="btn btn-danger">Desestimar</button>
+                                <button type="submit" name="Bloquear" class="btn btn-success ml-2">Bloquear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+    }
+
+</div>

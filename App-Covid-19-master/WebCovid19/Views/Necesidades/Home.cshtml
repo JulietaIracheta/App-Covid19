@@ -1,0 +1,63 @@
+﻿@model List<Entidades.Necesidades>
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    List<Entidades.Necesidades> necesidadesDelUser = ViewBag.necesidadesDelUser;
+    var estadoCollapse = "collapse show";
+
+}
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+        Mostrar/Ocultar Mis Necesidades
+    </a>
+</p>
+
+@if (ViewBag.ResultadoBusqueda != null)
+{
+    estadoCollapse = "collapse";
+}
+<div class="@estadoCollapse" id="collapseExample">
+    <div class="card card-body">
+        <div class="section-headline text-center">
+            <h2 class="font-weight-light">Mis Necesidades</h2>
+        </div>
+        @if (necesidadesDelUser.Count == 0)
+        {
+            <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
+        }
+        else
+        {
+            @*Necesidades del usuario logueado*@
+            @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", necesidadesDelUser)
+        }
+    </div>
+    <div class="card card-body">
+        <p>Fin de la lista de Mis Necesidades</p>
+    </div>
+</div>
+
+
+<div class="section-headline text-center">
+    <h2 class="font-weight-light mt-5">Necesidades que están esperando tu ayuda</h2>
+</div>
+
+@if (ViewBag.ResultadoBusqueda == false)
+{
+    <h4 class="text-center">No se encontraron resultados para tu búsqueda</h4>
+}
+else
+if (Model.Count == 0)
+{
+    <h4 class="text-center">No hay necesidades cargadas</h4>
+}
+else
+{
+    if (ViewBag.ResultadoBusqueda == true)
+    {
+        <h2>Resultados de la búsqueda:</h2>
+    }
+
+    @*Todas las necesidades menos la del usuario logueado*@
+    @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
+}
+

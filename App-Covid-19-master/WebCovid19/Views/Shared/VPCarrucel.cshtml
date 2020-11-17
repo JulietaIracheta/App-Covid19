@@ -1,0 +1,49 @@
+﻿<!--Comienza carrucel-->
+<div id="demo" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Content/img/8.jpg" alt="Obelisco - Buenos Aires" width="1100" height="500">
+            <div class="carousel-caption">
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
+                <h3>Miles de personas están solicitando tu ayuda</h3>
+                <p>Necesidades humanas</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Content/img/9.jpg" alt="Gente con barbijos" width="1100" height="500">
+            <div class="carousel-caption">
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
+                <h3>Debemos cuidarnos para proteger a los demás</h3>
+                <p>Solicitud de insumos y dinero</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Content/img/10.jpg" alt="Gente con bolsas" width="1100" height="500">
+            <div class="carousel-caption">
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
+                <h3>El aislamiento no genera separación, sino cuidado</h3>
+                <p>Ayudemos a quien lo necesita</p>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>

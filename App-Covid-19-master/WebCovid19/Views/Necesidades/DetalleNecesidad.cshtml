@@ -1,0 +1,15 @@
+﻿@model Entidades.Necesidades
+@{
+    ViewBag.Title = "DetalleNecesidad";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    int idSession = int.Parse(Session["UserId"].ToString());
+}
+
+@if (Model.NecesidadesDonacionesInsumos.Count > 0)
+{
+    @Html.Partial("~/Views/Shared/NecesidadDonacionInsumos.cshtml", Model)
+}
+else if (Model.NecesidadesDonacionesMonetarias.Count > 0)
+{
+    @Html.Partial("~/Views/Shared/NecesidadDonacionMonetaria.cshtml", Model)
+}

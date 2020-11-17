@@ -1,0 +1,44 @@
+﻿@model Entidades.Views.VMDonacionMonetaria
+
+@{
+    ViewBag.Title = "Donación monetaria";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+<br>
+<br>
+
+<center><h2>Donación Monetaria</h2></center>
+
+<div class="card mb-3 mt-5">
+    <div class="card-body  mt-5">
+        <h5 class="card-title text-center font-weight-light">Realizar Donación Monetaria</h5><br>
+
+
+        @using (Html.BeginForm("DonaMonetaria", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+        {
+            <input type="hidden" name="idNecesidadDonacionMonetaria" value="@Model.IdNecesidadDonacionMonetaria" />
+
+
+            @Html.AntiForgeryToken()
+
+            if (ViewBag.mensajeError != null) //Mensaje que esta en el controller.
+            {
+                <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
+            }
+
+
+            <div class="wrap-input100 validate-input">
+                @*Inputs con razor*@
+                @Html.EditorFor(model => model.Dinero, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Dinero) } })
+                <span class="focus-input100" data-placeholder="&#xe813;"></span>
+                @Html.ValidationMessageFor(model => model.Dinero, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-12 btn-group mt-4">
+
+                @Html.ActionLink("Cancelar", "IndexLogueado", "Home", null, new { @class = "btn btn-primary" })
+                <button type="submit" class="btn btn-primary ml-2">Enviar</button>
+            </div>
+        }
+    </div>
+</div>

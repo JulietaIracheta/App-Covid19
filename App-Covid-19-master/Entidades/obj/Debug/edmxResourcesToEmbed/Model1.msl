@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Denuncias">
+      <EntityTypeMapping TypeName="Model.Denuncias">
+        <MappingFragment StoreEntitySet="Denuncias">
+          <ScalarProperty Name="IdDenuncia" ColumnName="IdDenuncia" />
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="IdMotivo" ColumnName="IdMotivo" />
+          <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonacionesInsumos">
+      <EntityTypeMapping TypeName="Model.DonacionesInsumos">
+        <MappingFragment StoreEntitySet="DonacionesInsumos">
+          <ScalarProperty Name="IdDonacionInsumo" ColumnName="IdDonacionInsumo" />
+          <ScalarProperty Name="IdNecesidadDonacionInsumo" ColumnName="IdNecesidadDonacionInsumo" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonacionesMonetarias">
+      <EntityTypeMapping TypeName="Model.DonacionesMonetarias">
+        <MappingFragment StoreEntitySet="DonacionesMonetarias">
+          <ScalarProperty Name="IdDonacionMonetaria" ColumnName="IdDonacionMonetaria" />
+          <ScalarProperty Name="IdNecesidadDonacionMonetaria" ColumnName="IdNecesidadDonacionMonetaria" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+          <ScalarProperty Name="ArchivoTransferencia" ColumnName="ArchivoTransferencia" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MotivoDenuncia">
+      <EntityTypeMapping TypeName="Model.MotivoDenuncia">
+        <MappingFragment StoreEntitySet="MotivoDenuncia">
+          <ScalarProperty Name="IdMotivoDenuncia" ColumnName="IdMotivoDenuncia" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Necesidades">
+      <EntityTypeMapping TypeName="Model.Necesidades">
+        <MappingFragment StoreEntitySet="Necesidades">
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+          <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+          <ScalarProperty Name="TipoDonacion" ColumnName="TipoDonacion" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="IdUsuarioCreador" ColumnName="IdUsuarioCreador" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Valoracion" ColumnName="Valoracion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NecesidadesDonacionesInsumos">
+      <EntityTypeMapping TypeName="Model.NecesidadesDonacionesInsumos">
+        <MappingFragment StoreEntitySet="NecesidadesDonacionesInsumos">
+          <ScalarProperty Name="IdNecesidadDonacionInsumo" ColumnName="IdNecesidadDonacionInsumo" />
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NecesidadesDonacionesMonetarias">
+      <EntityTypeMapping TypeName="Model.NecesidadesDonacionesMonetarias">
+        <MappingFragment StoreEntitySet="NecesidadesDonacionesMonetarias">
+          <ScalarProperty Name="IdNecesidadDonacionMonetaria" ColumnName="IdNecesidadDonacionMonetaria" />
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+          <ScalarProperty Name="CBU" ColumnName="CBU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NecesidadesReferencias">
+      <EntityTypeMapping TypeName="Model.NecesidadesReferencias">
+        <MappingFragment StoreEntitySet="NecesidadesReferencias">
+          <ScalarProperty Name="IdReferencia" ColumnName="IdReferencia" />
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NecesidadesValoraciones">
+      <EntityTypeMapping TypeName="Model.NecesidadesValoraciones">
+        <MappingFragment StoreEntitySet="NecesidadesValoraciones">
+          <ScalarProperty Name="IdValoracion" ColumnName="IdValoracion" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="IdNecesidad" ColumnName="IdNecesidad" />
+          <ScalarProperty Name="Valoracion" ColumnName="Valoracion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="Model.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+          <ScalarProperty Name="FechaCracion" ColumnName="FechaCracion" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

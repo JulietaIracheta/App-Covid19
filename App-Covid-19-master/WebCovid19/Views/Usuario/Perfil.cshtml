@@ -1,0 +1,148 @@
+@model Entidades.Views.VMPerfil
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeInfo = (string)ViewData["mensajeInfo"];
+    string mensajeError = (string)ViewData["mensajeError"];
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
+}
+
+@using (Html.BeginForm("Perfil", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <br /><div class="container mt-5">
+
+        @if (mensajeInfo != null)
+        {
+            <div class="p-3 mb-2 bg-info text-white">@mensajeInfo</div>
+        }
+        @if (mensajeError != null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+        }
+        @if (mensajeCorrecto != null)
+        {
+            <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+        }
+
+
+
+        <div class="card" id="card">
+            <div class="col-md-12 ">
+                <div class="col-md-4 mt-3 mb-3 float-left">
+
+
+                    <div class="card" id="card">
+
+                        @if (Model.Foto == null)
+                        {
+                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="~/Content/Img/imagenPerfil-Nula.png" />
+
+                        }
+                        else
+                        {
+                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="@Model.Foto" />
+                        }
+     
+
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                @if (Model.Username != null)
+                                {
+                                    <h3 class="text-center">@Model.Username</h3>
+                                }
+
+
+                                <div class="input-group mb-3">
+                                    <div class="form-group">
+                                       
+                                            @Html.TextBoxFor(model => model.Foto, new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" })
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 mt-3 float-right">
+                    <div class="card" id="card">
+                        <div class="col-md-12">
+                            <div class="float-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-dark mt-3 float-right dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button>
+                                    <ul class="dropdown-menu hover " role="menu" id="colour">
+                                        <li class="text-center ">
+                                            <a href="" class="text-light">
+                                                
+                                                @Html.ActionLink(" Mis donaciones", "HistorialDonaciones", "Usuario", new { @class = "dropdown-item fa fa-history" })
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <h2 class="text-center">Datos Personales</h2>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                    </div>
+                                    @if (Model.Nombre == null)
+                                    {
+                                        @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", value = Model.Nombre } })
+                                        <input type="hidden" name="Nombre" value="@Model.Nombre" />
+                                    }
+
+                                    <br /> @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+                                    </div>
+                                    @if (Model.Apellido == null)
+                                    {
+                                        @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                                    }
+                                    else
+                                    {
+                                        @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", value = Model.Apellido } })
+                                        <input type="hidden" name="Apellido" value="@Model.Apellido" />
+                                    }
+
+                                    <br /> @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                                    </div>
+                                    @Html.EditorFor(o => o.Email, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", placeholder = "Email_Logueado@hotmail.com" } })
+                                    <input type="hidden" name="Email" value="@Model.Email" />
+                                </div>
+
+
+                            </div>
+                            <div class="text-center">
+                                @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-12 btn-group mb-4">
+                                @Html.ActionLink("Regresar a Home", "Home", "Necesidades", null, new { @class = "btn btn-danger" })
+                                <button type="submit" class="btn btn-primary ml-2">Guardar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

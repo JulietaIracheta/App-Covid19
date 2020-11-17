@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Css Main-->
+    @System.Web.Optimization.Styles.Render("~/bundles/css/main")<!--Bundles-->
+    <!--Boostrap Css-->
+    @System.Web.Optimization.Styles.Render("~/bundles/css/boostrap")<!--Bundles-->
+    <!--Iconos-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @System.Web.Optimization.Styles.Render("~/bundles/fonts/Font-Awesome-min")<!--Bundles-->
+    @System.Web.Optimization.Styles.Render("~/bundles/css/Linearicons")<!--Bundles-->
+    @System.Web.Optimization.Styles.Render("~/bundles/css/font-awesome")<!--Bundles-->
+    <!--Js-->
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/carrucel")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/umdJS")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/ValidacionesCliente")
+</head>
+
+<body>
+    @Html.Partial("VPHeader")
+    <div class="main-base">
+        <div class="container bg-soft">
+            <!-- Definición del menú -->
+            @RenderBody()
+            <!-- Termina la definición del menú -->
+        </div>
+    </div>
+    @Html.Partial("VPFooter")
+</body>
+
+
+</html>

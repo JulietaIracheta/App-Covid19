@@ -1,0 +1,39 @@
+﻿@model  List<Entidades.Metadata.NecesidadesDonacionesInsumosMetadata>
+@{
+    ViewBag.Title = "Listado de Insumos";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+<hr />
+<div class="col-12">
+    <h3 class="text-center font-weight-light">Modificación de Insumos</h3>
+    <h5 class="text-center text-danger">@ViewBag.Error</h5>
+</div>
+
+<div class="col col-md-8 col-lg-12">
+    <table class="table border border-primary table-light">
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Editar</th>
+        </tr>
+        @foreach (var l in Model)
+        {
+            <form method="post" action="../EditarInsumos/@l.IdNecesidad">
+                <tr>
+                    <td>
+                        <input name="Nombre" id="Nombre" value="@l.Nombre" type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" />
+                    </td>
+                    <td>
+                        <input name="Cantidad" id="Cantidad" value="@l.Cantidad" type="number" class="form-control" aria-describedby="inputGroup-sizing-sm" />
+                    </td>
+                    <td>
+                        <input type="hidden" name="IdNecesidadDonacionInsumo" id="IdNecesidadDonacionInsumo" value="@l.IdNecesidadDonacionInsumo" />
+                        <input type="hidden" name="IdNecesidad" id="IdNecesidad" value="@l.IdNecesidad" />
+                        <input type="submit" value="Modificar" class="btn btn-sm btn-primary" />
+                    </td>
+                </tr>
+            </form>
+        }
+    </table>
+</div>

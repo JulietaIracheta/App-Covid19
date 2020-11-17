@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Denuncia";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+ 
+        <div class="card mb-3 mt-5" id="margin-top-header">
+            <div class="card-body  mt-5">
+                <h5 class="card-title text-center">Denunciar publicación</h5>
+                <h6 class="card-subtitle mb-2 text-muted text-center">Realizar denuncia ante la publicación de: Titulo_obtenido @* --->  @ViewBag.titulo*@</h6>
+
+                <div class="col-md-12">
+                    <select name="" class="form-control" id="selectLarge">
+                        <option value="" class="text-center">Fraude</option>
+                        <option value="" class="text-center">Indebida</option>
+                        <option value="" class="text-center">Violación de derechos</option>
+                        <option value="" class="text-center">Contiene información política</option>
+                    </select>
+
+
+                    <textarea class="form-control mt-3" rows="3" placeholder="Ingrese un comentario"></textarea>
+                </div>
+
+                <div class="col-md-12 btn-group mt-4">
+
+                    <input type="hidden" name="IdNecesidad" value="@ViewBag.idNecesidad" />
+                    <button type="button" class="btn btn-danger">Cancelar</button>
+                    <button type="submit" class="btn btn-primary ml-2">Enviar</button>
+                </div>
+            </div>
+        </div>

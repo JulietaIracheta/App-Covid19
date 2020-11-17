@@ -1,0 +1,121 @@
+﻿@model List<Entidades.Views.VMNecesidades>
+
+@{
+    ViewBag.Title = "Historial";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistorialDonaciones</title>
+</head>
+<body>
+    <h2 class="font-weight-light text-center section-headline">Historial de donaciones</h2>
+
+
+    @if (Model.Count == 0)
+    {
+        <h4 class="text-center">Una vez que realizes una donacion, se te mostrará en esta sección.</h4>
+    }
+    else
+    {
+
+        <table class="table table-hover table-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Tipo de Donacion</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Recaudado</th>
+                    <th scope="col">Mi Donacion</th>
+                    <th scope="col">Fecha de donacion</th>
+                    <th scope="col">Detalles de necesidad</th>
+                </tr>
+            </thead>
+            @foreach (var donacion in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@donacion.Nombre</td>
+                        <td>@donacion.TipoDonacion</td>
+                        <td>@donacion.Estado</td>
+
+                        @if (donacion.TipoDonacion == Entidades.Enum.TipoDonacion.Monetaria)
+                        {
+
+                            <td>$ @donacion.TotalDineroRecaudado</td>
+                        }
+                        else
+                        {
+                            <td>
+                                @foreach (var donacionInsumo in donacion.DonacionesInsumos)
+                                {
+                                    <p>@donacionInsumo.NombreNecesidadInsumos ( @donacionInsumo.TotalRecaudado)</p>
+
+                                }
+                            </td>
+
+                        }
+
+                        @if (donacion.TipoDonacion == Entidades.Enum.TipoDonacion.Monetaria)
+                        {
+                            <td>
+                                @foreach (var donacionMonetaria in donacion.MisDonacionesMonetarias)
+                                {
+                                    <p>$ @donacionMonetaria.Dinero </p>
+                                }
+
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @foreach (var donacionInsumo in donacion.MisDonacionesInsumos)
+                                {
+                                    <p>
+
+                                        @donacionInsumo.NecesidadesDonacionesInsumos.Nombre
+                                        (@donacionInsumo.Cantidad)
+
+                                    </p>
+                                }
+                            </td>
+                        }
+
+                        @if (donacion.TipoDonacion == Entidades.Enum.TipoDonacion.Monetaria)
+                        {
+                            <td>
+
+                                @foreach (var donacionMonetaria in donacion.MisDonacionesMonetarias)
+                                {
+                                    <p>@donacionMonetaria.FechaCreacion </p>
+                                }
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @foreach (var donacionInsumo in donacion.MisDonacionesInsumos)
+                                {
+                                    <p>
+                                        @donacionInsumo.FechaCreacion
+                                    </p>
+                                }
+                            </td>
+                        }
+                        <td>
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@donacion.IdNecesidad" class="btn btn-info">Mas detalles</a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+
+    }
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@model  List<Entidades.NecesidadesReferencias>
+@{
+    ViewBag.Error = TempData["Error"] != null ? TempData["Error"] : "";
+    ViewBag.Title = "Listado de Referencias";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+<hr />
+<div class="col-12">
+    <h3 class="text-center font-weight-light">Modificación de Referencias</h3>
+    <h5 class="text-center text-danger">@ViewBag.Error</h5>
+</div>
+
+<div class="col col-md-8 col-lg-12">
+    <table class="table border border-primary table-light">
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Editar</th>
+        </tr>
+        @foreach (var v in Model)
+        {
+            <form method="post" action="../ModificarReferencias/@v.IdNecesidad">
+                <tr>
+                    <td class="inpiu">
+                        <input name="Nombre" id="Nombre" value="@v.Nombre" type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" />
+                    </td>
+                    <td>
+                        <input name="Telefono" id="Telefono" value="@v.Telefono" class="form-control" aria-describedby="inputGroup-sizing-sm" />
+                    </td>
+                    <td>
+                        <input type="hidden" name="IdReferencia" id="IdReferencia" value="@v.IdReferencia" />
+                        <input type="hidden" name="IdNecesidad" id="IdNecesidad" value="@v.IdNecesidad" />
+                        <input type="submit" value="Modificar" class="btn btn-sm btn-primary" />
+                    </td>
+                </tr>
+            </form>
+        }
+    </table>
+</div>
+
+

@@ -1,0 +1,103 @@
+@model List<Entidades.Necesidades>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    var mensaje = (string)Request["mensaje"];
+    int top = 1;
+}
+
+<!--Carrucel-->
+@Html.Partial("VPCarrucel")
+<!--Fin carrusel-->
+<hr />
+<!--Necesidades-->
+@if (mensaje != null)
+{
+    <div class="p-3 mb-2 bg-warning text-white">@mensaje</div>
+}
+
+
+
+@if (Model.Count == 0)
+{
+    <div class="text-center text-dark">
+        <h3 class="bg-light"> Aun no hay necesidades cargadas</h3>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="text-center text-uppercase card-title">
+            <h2>Top 5 Necesidades más valoradas</h2>
+        </div>
+        @foreach (var necesidad in Model)
+        {
+
+            <div class="container">
+
+                @switch (@top)
+                {
+                    case 1:<h3 class="text-center card-title " text-white> Necesidad con más valoraciones</h3>
+                        break;
+                    case 2: <h3 class="text-center card-title " text-white> Segunda Necesidad más valorada</h3>
+                        break;
+                    case 3: <h3 class="text-center card-title " text-white> Tercera Necesidad más valorada</h3>
+                        break;
+                    case 4: <h3 class="text-center  card-title " text-white> Cuarta Necesidad más valorada</h3>
+                        break;
+                    case 5: <h3 class="text-center  card-title " text-white> Quinta Necesidad más valorada</h3>
+                        break;
+                }
+
+                @{ top++;}
+                <div class="card bg-soft offset-lg-1 col-lg-10" id="card">
+                    <div class="col-md-12">
+
+
+                        <div class="row">
+                            @if (necesidad.Usuarios.Foto == null)
+                            {
+                                <img class="rounded-circle float-left mt-2 m-auto border border-white" id="image-perfil-index" src="/Imagenes/imagenPerfil-Nula.png">
+                            }
+                            else
+                            {
+                                <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil-index" src="@necesidad.Usuarios.Foto">
+                            }
+
+                            <div class="col-md-12 text-center">
+                                <p class=" text-secondary mt-3 text-center"><b>@necesidad.Usuarios.UserName</b></p>
+                                <p><span class="fa fa-calendar text-center"></span> @necesidad.FechaCreacion</p>
+                            </div>
+
+                        </div>
+                        <h1 class="text-center font-weight-light"> <b class="text-primary">@necesidad.Valoracion%</b> de valoraciones </h1>
+
+
+                    </div>
+                    <img class="card-img-top" src="@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
+                    <div class="card-body">
+
+
+
+                        <h2 class="card-title text-center">@necesidad.Nombre</h2>
+                        <p class="card-text mt-3">
+                            @necesidad.Descripcion
+                        </p>
+
+
+                        <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
+                        <div class="text-center">
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+        <!--FIN DE LA PUBLICACION-->
+    </div>
+}

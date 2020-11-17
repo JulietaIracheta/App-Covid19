@@ -1,0 +1,104 @@
+﻿@model Entidades.Metadata.NecesidadesMetadata
+
+@{
+    ViewBag.Title = "Modificar";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+<div class="row">
+    <div class="col offset-md-2 col-md-8 text-center border border-primary table-light">
+        @using (Html.BeginForm("Modificar/" + Model.IdNecesidad, "Necesidades", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <h4 class="font-weight-light">Modificar Necesidad</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Nombre:</label>
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Descripcion:</label>
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono de contacto:</label>
+                @Html.EditorFor(model => model.TelefonoContacto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TelefonoContacto, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Fecha de finalización: </label>
+
+                @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
+                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Foto:</label>
+                @Html.EditorFor(model => model.Foto, new { htmlAttributes = new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" } })
+                @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(model => model.IdNecesidad)
+            @Html.HiddenFor(model => model.IdUsuarioCreador)
+            @Html.HiddenFor(model => model.TipoDonacion)
+
+            <div class="row">
+                <div class="col-md-6 mt-2">
+
+                    @if (Model.TipoDonacion == Entidades.Enum.TipoDonacion.Insumos)
+                    {
+                        <div class="form-group-sm">
+                            <div class="mt-1">
+                                @Html.ActionLink("Agregar otro Insumo", "Insumos", "Necesidades", null, new { @class = "btn btn-primary" })
+                            </div>
+                            <div class="mt-1">
+                                @Html.ActionLink("Editar Insumos", "EditarInsumos/" + Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group-sm">
+                            <div class="mt-1">
+                                @Html.ActionLink("Agregar otra Monetaria", "Monetaria", "Necesidades", null, new { @class = "btn btn-primary" })
+                            </div>
+                            <div class="mt-1">
+                                @Html.ActionLink("Editar Monetaria", "EditarMonetarias/" + Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+
+
+                <div class="col-md-6 float-right mt-3 mb-2">
+                    <div class="form-group-sm">
+                        <input type="submit" value="Modificar" class="btn btn-primary" />
+                    </div>
+                    <div class="mt-1">
+                        @Html.ActionLink("Editar Referencias", "ModificarReferencias/" + Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
+                    </div>
+
+                    @if (Model.NecesidadesReferencias.Count < 2)
+                    {
+                        <div class="form-group-sm">
+                            <div class="mt-1">
+                                @Html.ActionLink("Agregar Referencias", "Referencias", "Necesidades", null, new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

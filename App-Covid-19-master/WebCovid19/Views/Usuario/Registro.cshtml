@@ -1,0 +1,83 @@
+﻿@model Entidades.Views.VMRegistro
+
+@{
+    ViewBag.Title = "Registro";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
+    string mensajeError = (string)ViewData["mensajeError"];
+
+}
+
+
+<div class="limiter" id="margin-top-header">
+    <div class="container-login100" style="background-image: url('~/Content/Img/5.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+            <span class="login100-form-title p-b-41">
+                Registro
+            </span><br>
+            @using (Html.BeginForm("Registro", "Usuario", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+            {
+
+
+                @Html.AntiForgeryToken()
+
+                if (mensajeError != null)
+                {
+                    <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+                }
+                if (mensajeAdvertencia != null)
+                {
+                    <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
+                }
+
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Email) } })
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Password), Type = "password" } })
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.RepeatPassword, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.RepeatPassword), Type = "password" } })
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    @Html.ValidationMessageFor(model => model.RepeatPassword, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @class = "input100", Type = "date", placeholder = Html.DisplayNameFor(x => x.FechaNacimiento) } })
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                </div><br>
+
+
+                <div class="container-login100-form-btn m-t-32">
+                    <button class="login100-form-btn">
+                        Registrarse
+                    </button>
+
+                </div><br>
+                <div class="col-md-10 text-center container-login100-form-btn">
+                    Ya tengo una cuenta  &nbsp;  @Html.ActionLink(" Log in", "Login", "Usuario", null, new { @class = " text-primary" })
+                </div>
+            }
+
+        <div class=" text-light card-body text-center black ">
+            <p class="text-light" id="font-Registro-info"> No me llego el email de activacion al registrarme</p> @Html.ActionLink("Volver a Enviarme", "ReenvioDeCodigo", "Usuario", null, new { @class = " btn btn-primary ml-3" })
+
+        </div>
+           
+        </div>
+        
+    </div>
+    
+</div>
+
+@*<div class="p-3 mb-2 bg-info text-white text-center">En caso de que no le haya llegado el email con su codigo de activacion, ingrese aca  </div>
+*@

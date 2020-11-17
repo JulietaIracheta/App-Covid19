@@ -1,0 +1,202 @@
+@model List<Entidades.Necesidades>
+
+@{
+    int idSession = int.Parse(Session["UserId"].ToString());
+}
+
+
+
+@foreach (var necesidad in Model)
+{
+    <div class="container" >
+        <div class="card" id="card">
+            <div class="col-md-12">
+                <div class="float-right">
+
+                    @if (necesidad.IdUsuarioCreador != idSession)
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark mt-3 float-right dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button>
+                            <ul class="dropdown-menu hover " role="menu" id="colour">
+                                <li class="text-center ">
+                                    <a href="" class="text-light">
+                                        <svg class="bi bi-exclamation-square-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2zm6 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                                        </svg>
+                                        @Html.ActionLink("Denunciar", "Denunciar", "Denuncia", new { id = necesidad.IdNecesidad }, new { @class = "hover text-light", value = necesidad.IdNecesidad })
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+
+                <div class="row">
+                    @if (necesidad.Usuarios.Foto == null)
+                    {
+                        <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="/Imagenes/imagenPerfil-Nula.png">
+                    }
+                    else
+                    {
+                        <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="@necesidad.Usuarios.Foto">
+                    }
+
+                    <div class="col-md-2">
+                        <p class=" text-secondary mt-3"><b>@necesidad.Usuarios.UserName</b></p>
+                        <p><span class="fa fa-calendar"></span> @necesidad.FechaCreacion</p>
+                    </div>
+                </div>
+
+            </div>
+            <img class="card-img-top" src="@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
+            <div class="card-body">
+                @if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada || necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                {
+                    <button type="button" class="btn btn-outline-info disabled" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                    <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
+
+                }
+                else
+                {
+
+                using (Html.BeginForm("LikeOrDislike", "Usuario", FormMethod.Post, new { @class = "float-auto" }))
+                {
+                    <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
+
+                    if (Model.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        int bandera = 0;
+
+                        foreach (var item in necesidad.NecesidadesValoraciones)     //3 ... 1... 2
+                        {
+
+
+                            if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Like")
+                            {
+                                <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                break;
+                            }
+                            else
+                            {
+                                bandera++;
+                            }
+
+                        }
+
+
+                        // if (Model.necesidadesValoraciones.Count == bandera)
+                        if (necesidad.NecesidadesValoraciones.Count == bandera)
+                        {
+                            <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        }
+                    }
+                    <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
+
+
+
+
+                    // if (Model.necesidadesValoraciones.Count == 0)
+                    if (necesidad.NecesidadesValoraciones.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        int bandera = 0;
+                        // foreach (var item in Model.necesidadesValoraciones)
+                        foreach (var item in necesidad.NecesidadesValoraciones)
+                        {
+                            if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Dislike")
+                            {
+                                <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                break;
+                            }
+                            else
+                            {
+                                bandera++;
+
+                            }
+                        }
+
+                        //if (Model.necesidadesValoraciones.Count == bandera)
+                        if (necesidad.NecesidadesValoraciones.Count == bandera)
+                        {
+                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        }
+                    }
+                    <label> No estoy de acuerdo </label>
+
+                    if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada)
+                    {
+                        <div class="float-right">
+                            <label> <b class="text-black-50">Necesidad Finalizada</b> </label>
+                        </div>
+                    }
+                    else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Activa)
+                    {
+
+                        <div class="float-right">
+                            @if (necesidad.TipoDonacion == (int)Entidades.Enum.TipoDonacion.Monetaria)
+                            {
+                                <label> <b class="text-primary">Solicita Dinero</b> </label>
+                            }
+                            else
+                            {
+                                <label> <b class="text-primary">Solicita Insumos</b> </label>
+                            }
+
+                        </div>
+                    }
+                }
+
+                }
+                <h2 class="card-title text-center">@necesidad.Nombre</h2>
+                <p class="card-text mt-3">
+                    @necesidad.Descripcion
+                </p>
+                @if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && necesidad.IdUsuarioCreador == idSession)
+                {
+
+                    <div class="p-3 mb-2 bg-danger text-white text-center">Esta Necesidad ha sido bloqueada por nuestros administradores por incumplimiento de nuestras reglas.</div>
+                }
+                else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && necesidad.IdUsuarioCreador == idSession)
+                {
+
+                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad esta en revision de ser publica.</div>
+
+                }
+
+                <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
+                @if (necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada | necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Revision)
+                {
+
+                    <div class="text-center">
+                        @if (necesidad.IdUsuarioCreador == idSession && necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada && necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                        {
+
+                            @Html.ActionLink("Editar", "Modificar/" + @necesidad.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
+
+
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                        }
+                        else
+                        {
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!--FIN DE LA PUBLICACION-->
+
+
+
+}

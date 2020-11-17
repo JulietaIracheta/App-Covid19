@@ -1,0 +1,22 @@
+﻿@model Entidades.DonacionesInsumos
+@{
+    ViewBag.Title = "Donar";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+@using (Html.BeginForm("Donar", "DonacionInsumos", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+{
+    <input type="hidden" name="IdNecesidadDonacionInsumo" value="@Model.IdNecesidadDonacionInsumo" />
+    
+    <center>
+        <h3 class="font-weight-light">Cantidad a donar</h3>
+        <div class="wrap-input100 validate-input">
+            @*Inputs con razor*@
+            @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "input100" } })
+            <span class="focus-input100"></span>
+            @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+        </div><br />
+        <button type="submit" class="btn btn-primary ml-2">DONAR</button>
+    </center>
+
+}

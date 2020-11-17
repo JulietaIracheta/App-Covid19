@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Mensaje = TempData["Mensaje"];
+    ViewBag.Creada = TempData["Creada"];
+    ViewBag.Insumo = TempData["Insumo"];
+    ViewBag.Monetaria = TempData["Monetaria"];
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+    <div class="text-sm-center">
+        <h3 class="text-danger">@ViewBag.Mensaje</h3>
+        <h3 class="text-primary">@ViewBag.Creada</h3>
+        @if (ViewBag.Insumo!=null)
+        {
+            @Html.ActionLink("Agregar otro Insumo", "Insumos", "Necesidades")
+        }
+        @if (ViewBag.Monetaria!=null)
+        {
+            @Html.ActionLink("Agregar otra necesidad Monetaria", "Monetaria", "Necesidades")
+        }
+
+    </div>
+

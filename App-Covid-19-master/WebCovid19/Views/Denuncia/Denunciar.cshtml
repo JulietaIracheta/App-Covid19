@@ -1,0 +1,51 @@
+﻿@model Entidades.Denuncias
+@{
+    ViewBag.Title = "Denuncia";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeError = ViewBag.mensajeError;
+    string mensajeCorrecto = ViewBag.mensajeCorrecto;
+}
+
+<div class="card mb-3 mt-5" id="margin-top-header">
+    <div class="card-body  mt-5">
+        <h5 class="card-title text-center">Denunciar publicación</h5>
+        <h6 class="card-subtitle mb-2 text-muted text-center">Realizar denuncia ante la publicación de: @ViewBag.Necesidad</h6>
+        @if (mensajeError != null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+        }
+        @if (mensajeCorrecto != null)
+        {
+            <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+        }
+
+
+        @using (Html.BeginForm("Denunciar", "Denuncia", FormMethod.Post))
+        {
+            <div class="col-md-12">
+                <select name="IdMotivo" class="form-control" id="selectLarge">
+                    @foreach (Entidades.MotivoDenuncia item in @ViewBag.motivosDenuncia)
+                    {
+                        <option value="@item.IdMotivoDenuncia">@item.Descripcion</option>
+                    }
+                </select>
+
+                @Html.ValidationMessageFor(d => d.IdMotivo, "", new { @class = "text-danger" })
+
+
+                <textarea name="Comentarios" class="form-control mt-3" rows="3" placeholder="Ingrese un comentario"></textarea>
+                @Html.ValidationMessageFor(d => d.Comentarios, "", new { @class = "text-danger" })
+            </div>
+
+
+            <input type="hidden" name="IdNecesidad" value=@ViewBag.idNecesidad />
+
+            <div class="col-md-12 btn-group mt-4">
+
+
+                @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
+                <button type="submit" class="btn btn-primary ml-2">Enviar</button>
+            </div>
+        }
+    </div>
+</div>

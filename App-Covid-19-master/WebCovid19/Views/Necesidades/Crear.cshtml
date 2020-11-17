@@ -1,0 +1,59 @@
+﻿@model Entidades.Metadata.NecesidadesMetadata
+
+@{
+    ViewBag.Title = "Crear - Necesidad";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+<div class="row">
+    <div class="col offset-md-2 col-md-8 text-center border border-primary table-light">
+        @using (Html.BeginForm("Crear", "Necesidades", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <h4 class="font-weight-light">Crear Necesidad</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, "Nombre: ")
+
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Descripcion, "Descripción: ")
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaFin, "Fecha de finalización: ")
+                @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
+                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TelefonoContacto, "Teléfono de contacto: ")
+                @Html.EditorFor(model => model.TelefonoContacto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TelefonoContacto, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TipoDonacion, "Tipo de donación: ")
+                <select name="TipoDonacion" id="TipoDonacion" class="custom-select">
+                    <option value="1">Monetaria</option>
+                    <option value="2">Insumos</option>
+                </select>
+            </div>
+            @Html.ValidationMessageFor(model => model.TipoDonacion, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label for="Foto">Imagen: </label>
+                @Html.TextBoxFor(model => model.Foto, new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" })
+                @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+            </div>
+            <div class="btn-group-sm">
+                @Html.ActionLink("Regresar a Home", "Index", "Home", null, new { @class = "btn btn-info" })
+                <input type="submit" value="Siguiente" class="btn btn-primary" />
+            </div>
+            <hr />
+        }
+    </div>
+</div>
